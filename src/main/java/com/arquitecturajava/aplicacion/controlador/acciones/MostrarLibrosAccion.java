@@ -1,14 +1,15 @@
 package com.arquitecturajava.aplicacion.controlador.acciones;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.arquitecturajava.aplicacion.bo.Categoria;
 import com.arquitecturajava.aplicacion.bo.Libro;
 import com.arquitecturajava.aplicacion.dao.CategoriaDao;
 import com.arquitecturajava.aplicacion.dao.LibroDao;
+import com.arquitecturajava.aplicacion.jpa.CategoriaDaoImpl;
+import com.arquitecturajava.aplicacion.jpa.LibroDaoImpl;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author cecilio alvarez caules contacto@arquitecturajava.com
@@ -19,8 +20,8 @@ public class MostrarLibrosAccion extends Accion {
     @Override
     public String ejecutar(HttpServletRequest request,
                            HttpServletResponse response) {
-        LibroDao libroDao = new LibroDao();
-        CategoriaDao categoriaDao = new CategoriaDao();
+        LibroDao libroDao = new LibroDaoImpl();
+        CategoriaDao categoriaDao = new CategoriaDaoImpl();
         List<Libro> listaDeLibros = libroDao.buscarTodos();
         List<Categoria> listaDeCategorias = categoriaDao.buscarTodos();
         request.setAttribute("listaDeLibros", listaDeLibros);

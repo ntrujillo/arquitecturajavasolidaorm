@@ -3,6 +3,7 @@ package com.arquitecturajava.aplicacion.controlador.acciones;
 import com.arquitecturajava.aplicacion.bo.Categoria;
 import com.arquitecturajava.aplicacion.bo.Libro;
 import com.arquitecturajava.aplicacion.dao.LibroDao;
+import com.arquitecturajava.aplicacion.jpa.LibroDaoImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +19,7 @@ public class InsertarLibroAccion extends Accion {
     public String ejecutar(HttpServletRequest request,
                            HttpServletResponse response) {
 
-        LibroDao libroDao = new LibroDao();
+        LibroDao libroDao = new LibroDaoImpl();
 
 
         String isbn = request.getParameter("isbn");

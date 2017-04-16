@@ -4,6 +4,8 @@ import com.arquitecturajava.aplicacion.bo.Categoria;
 import com.arquitecturajava.aplicacion.bo.Libro;
 import com.arquitecturajava.aplicacion.dao.CategoriaDao;
 import com.arquitecturajava.aplicacion.dao.LibroDao;
+import com.arquitecturajava.aplicacion.jpa.CategoriaDaoImpl;
+import com.arquitecturajava.aplicacion.jpa.LibroDaoImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,8 +21,8 @@ public class FiltrarLibrosPorCategoriaAccion extends Accion {
     public String ejecutar(HttpServletRequest request,
                            HttpServletResponse response) {
 
-        LibroDao libroDao = new LibroDao();
-        CategoriaDao categoriaDao = new CategoriaDao();
+        LibroDao libroDao = new LibroDaoImpl();
+        CategoriaDao categoriaDao = new CategoriaDaoImpl();
 
         List<Libro> listaDeLibros = null;
         List<Categoria> listaDeCategorias = categoriaDao.buscarTodos();
