@@ -2,7 +2,7 @@ package com.arquitecturajava.aplicacion.controlador.acciones;
 
 import com.arquitecturajava.aplicacion.bo.Categoria;
 import com.arquitecturajava.aplicacion.dao.CategoriaDao;
-import com.arquitecturajava.aplicacion.jpa.CategoriaDaoImpl;
+import com.arquitecturajava.aplicacion.factory.CategoriaDaoFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +17,7 @@ public class FormularioInsertarLibroAccion extends Accion {
     @Override
     public String ejecutar(HttpServletRequest request,
                            HttpServletResponse response) {
-        CategoriaDao categoriaDao = new CategoriaDaoImpl();
+        CategoriaDao categoriaDao = CategoriaDaoFactory.getInstance();
 
         List<Categoria> listaDeCategorias = null;
 

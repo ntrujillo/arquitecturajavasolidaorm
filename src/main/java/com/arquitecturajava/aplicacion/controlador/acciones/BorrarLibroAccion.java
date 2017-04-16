@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.arquitecturajava.aplicacion.bo.Libro;
 import com.arquitecturajava.aplicacion.dao.CategoriaDao;
 import com.arquitecturajava.aplicacion.dao.LibroDao;
+import com.arquitecturajava.aplicacion.factory.CategoriaDaoFactory;
+import com.arquitecturajava.aplicacion.factory.LibroDaoFactory;
 import com.arquitecturajava.aplicacion.jpa.CategoriaDaoImpl;
 import com.arquitecturajava.aplicacion.jpa.LibroDaoImpl;
 
@@ -18,8 +20,8 @@ public class BorrarLibroAccion extends Accion {
     @Override
     public String ejecutar(HttpServletRequest request,
                            HttpServletResponse response) {
-        LibroDao libroDao = new LibroDaoImpl();
-        CategoriaDao categoriaDao = new CategoriaDaoImpl();
+        LibroDao libroDao = LibroDaoFactory.getInstance();
+        CategoriaDao categoriaDao = CategoriaDaoFactory.getInstance();
 
         String isbn = request.getParameter("isbn");
         Libro libro = new Libro(isbn);

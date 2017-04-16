@@ -3,6 +3,7 @@ package com.arquitecturajava.aplicacion.controlador.acciones;
 import com.arquitecturajava.aplicacion.bo.Categoria;
 import com.arquitecturajava.aplicacion.bo.Libro;
 import com.arquitecturajava.aplicacion.dao.LibroDao;
+import com.arquitecturajava.aplicacion.factory.LibroDaoFactory;
 import com.arquitecturajava.aplicacion.jpa.LibroDaoImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ public class ModificarLibroAccion extends Accion {
     public String ejecutar(HttpServletRequest request,
                            HttpServletResponse response) {
 
-        LibroDao libroDao = new LibroDaoImpl();
+        LibroDao libroDao = LibroDaoFactory.getInstance();
         String isbn = request.getParameter("isbn");
         String titulo = request.getParameter("titulo");
         String categoria = request.getParameter("categoria");
