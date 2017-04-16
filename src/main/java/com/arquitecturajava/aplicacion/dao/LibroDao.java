@@ -8,17 +8,7 @@ import java.util.List;
 /**
  * Created by admuser on 16/04/17.
  */
-public interface LibroDao {
-
-    void insertar(Libro l);
-
-    void borrar(Libro l);
-
-    void salvar(Libro l);
-
-    List<Libro> buscarTodos();
-
-    Libro buscarPorClave(String isbn);
+public interface LibroDao extends GenericDao<Libro,String> {
 
     List<Libro> buscarPorCategoria(Categoria categoria);
 }
