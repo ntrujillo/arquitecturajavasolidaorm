@@ -2,10 +2,8 @@ package com.arquitecturajava.aplicacion.controlador.acciones;
 
 import com.arquitecturajava.aplicacion.bo.Categoria;
 import com.arquitecturajava.aplicacion.bo.Libro;
-import com.arquitecturajava.aplicacion.dao.CategoriaDao;
-import com.arquitecturajava.aplicacion.dao.LibroDao;
-import com.arquitecturajava.aplicacion.factory.DaoAbstractFactory;
-import com.arquitecturajava.aplicacion.factory.DaoFactory;
+import com.arquitecturajava.aplicacion.servicios.ServicioLibros;
+import com.arquitecturajava.aplicacion.servicios.impl.ServicioLibrosImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,23 +18,21 @@ public class FiltrarLibrosPorCategoriaAccion extends Accion {
     @Override
     public String ejecutar(HttpServletRequest request,
                            HttpServletResponse response) {
-        DaoFactory factory = DaoAbstractFactory.getInstance();
-        LibroDao libroDao = factory.getLibroDao();
-        CategoriaDao categoriaDao = factory.getCategoriaDao();
+        ServicioLibros servicioLibros = new ServicioLibrosImpl();
 
         List<Libro> listaDeLibros = null;
-        List<Categoria> listaDeCategorias = categoriaDao.buscarTodos();
+        List<Categoria> listaDeCategorias = servicioLibros.buscarTodasLasCategorias();
 
         if (request.getParameter("categoria") == null
                 || request.getParameter("categoria").equals("seleccionar")) {
 
-            listaDeLibros = libroDao.buscarTodos();
+            listaDeLibros = servicioLibros.buscarTodosLosLibros();
 
         } else {
 
-            Categoria categoria = categoriaDao.buscarPorClave(Integer.parseInt(request
+            Categoria categoria = servicioLibros.buscarCategoriaPorClave(Integer.parseInt(request
                     .getParameter("categoria")));
-            listaDeLibros = libroDao.buscarPorCategoria(categoria);
+            listaDeLibros = servicioLibros.buscarLibroPorCategoria(categoria);
 
         }
         request.setAttribute("listaDeLibros", listaDeLibros);
