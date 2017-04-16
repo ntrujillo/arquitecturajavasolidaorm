@@ -1,28 +1,28 @@
 package com.arquitecturajava.aplicacion.controlador.acciones;
 
-import java.util.List;
+import com.arquitecturajava.aplicacion.bo.Categoria;
+import com.arquitecturajava.aplicacion.dao.CategoriaDao;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.arquitecturajava.aplicacion.bo.Categoria;
+import java.util.List;
 
 /**
- * @author      cecilio alvarez caules contacto@arquitecturajava.com
- * @version     1.0                        
+ * @author cecilio alvarez caules contacto@arquitecturajava.com
+ * @version 1.0
  */
 public class FormularioInsertarLibroAccion extends Accion {
 
-	@Override
-	public String ejecutar(HttpServletRequest request,
-			HttpServletResponse response) {
-		
-		
-		List<Categoria> listaDeCategorias = null;
+    @Override
+    public String ejecutar(HttpServletRequest request,
+                           HttpServletResponse response) {
+        CategoriaDao categoriaDao = new CategoriaDao();
 
-		listaDeCategorias = Categoria.buscarTodos();
-		request.setAttribute("listaDeCategorias", listaDeCategorias);
-		return "FormularioInsertarLibro.jsp";
-	}
+        List<Categoria> listaDeCategorias = null;
+
+        listaDeCategorias = categoriaDao.buscarTodos();
+        request.setAttribute("listaDeCategorias", listaDeCategorias);
+        return "FormularioInsertarLibro.jsp";
+    }
 
 }

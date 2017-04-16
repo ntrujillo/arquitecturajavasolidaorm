@@ -1,18 +1,12 @@
 package com.arquitecturajava.aplicacion.bo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.TypedQuery;
-
-import com.arquitecturajava.aplicacion.JPAHelper;
 
 @Entity
 @Table(name = "categorias")
@@ -63,36 +57,5 @@ public class Categoria {
         this.listaDeLibros = listaDeLibros;
     }
 
-    public static List<Categoria> buscarTodos() {
-
-        EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
-        EntityManager manager = factoriaSession.createEntityManager();
-        try {
-            TypedQuery<Categoria> consulta = manager.createQuery("Select c from Categoria c", Categoria.class);
-            return consulta.getResultList();
-        } finally {
-            manager.close();
-        }
-
-    }
-
-    public static Categoria buscarPorClave(int id) {
-
-        EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
-        EntityManager manager = factoriaSession.createEntityManager();
-
-        TypedQuery<Categoria> consulta = manager.createQuery("Select c from Categoria c where c.id=?1",
-                Categoria.class);
-        consulta.setParameter(1, id);
-        try {
-
-            return consulta.getSingleResult();
-
-        } finally {
-
-            manager.close();
-        }
-
-    }
 
 }

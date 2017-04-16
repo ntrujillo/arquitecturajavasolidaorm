@@ -1,42 +1,46 @@
 package com.arquitecturajava.aplicacion.controlador.acciones;
 
-import java.util.List;
+import com.arquitecturajava.aplicacion.bo.Categoria;
+import com.arquitecturajava.aplicacion.bo.Libro;
+import com.arquitecturajava.aplicacion.dao.CategoriaDao;
+import com.arquitecturajava.aplicacion.dao.LibroDao;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.arquitecturajava.aplicacion.bo.Categoria;
-import com.arquitecturajava.aplicacion.bo.Libro;
+import java.util.List;
 
 /**
- * @author      cecilio alvarez caules contacto@arquitecturajava.com
- * @version     1.0                        
+ * @author cecilio alvarez caules contacto@arquitecturajava.com
+ * @version 1.0
  */
 public class FiltrarLibrosPorCategoriaAccion extends Accion {
 
-	@Override
-	public String ejecutar(HttpServletRequest request,
-			HttpServletResponse response) {
-		
-		List<Libro> listaDeLibros = null;
-		List<Categoria> listaDeCategorias = Categoria.buscarTodos();
+    @Override
+    public String ejecutar(HttpServletRequest request,
+                           HttpServletResponse response) {
 
-		if (request.getParameter("categoria") == null
-				|| request.getParameter("categoria").equals("seleccionar")) {
+        LibroDao libroDao = new LibroDao();
+        CategoriaDao categoriaDao = new CategoriaDao();
 
-			listaDeLibros = Libro.buscarTodos();
+        List<Libro> listaDeLibros = null;
+        List<Categoria> listaDeCategorias = categoriaDao.buscarTodos();
 
-		} else {
+        if (request.getParameter("categoria") == null
+                || request.getParameter("categoria").equals("seleccionar")) {
 
-			Categoria categoria= Categoria.buscarPorClave(Integer.parseInt(request
-					.getParameter("categoria")));
-			listaDeLibros = Libro.buscarPorCategoria(categoria);
+            listaDeLibros = libroDao.buscarTodos();
 
-		}
-		request.setAttribute("listaDeLibros", listaDeLibros);
-		request.setAttribute("listaDeCategorias", listaDeCategorias);
-		
-		return "MostrarLibros.jsp";
-	}
+        } else {
+
+            Categoria categoria = categoriaDao.buscarPorClave(Integer.parseInt(request
+                    .getParameter("categoria")));
+            listaDeLibros = libroDao.buscarPorCategoria(categoria);
+
+        }
+        request.setAttribute("listaDeLibros", listaDeLibros);
+        request.setAttribute("listaDeCategorias", listaDeCategorias);
+
+        return "MostrarLibros.jsp";
+    }
 
 }

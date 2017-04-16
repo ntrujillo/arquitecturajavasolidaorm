@@ -1,4 +1,4 @@
-package com.arquitecturajava.aplicacion;
+package com.arquitecturajava.aplicacion.dao;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
