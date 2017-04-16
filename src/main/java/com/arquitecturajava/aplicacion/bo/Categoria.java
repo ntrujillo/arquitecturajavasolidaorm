@@ -17,92 +17,82 @@ import com.arquitecturajava.aplicacion.JPAHelper;
 @Entity
 @Table(name = "categorias")
 public class Categoria {
-	@Id
-	private int id;
-	private String descripcion;
-	@OneToMany
-	@JoinColumn(name = "categoria")
-	private List<Libro> listaDeLibros;
+    @Id
+    private int id;
+    private String descripcion;
+    @OneToMany
+    @JoinColumn(name = "categoria")
+    private List<Libro> listaDeLibros;
 
-	public Categoria(int id) {
-		super();
-		this.id = id;
-	}
+    public Categoria(int id) {
+        super();
+        this.id = id;
+    }
 
-	public Categoria() {
-		super();
-	}
+    public Categoria() {
+        super();
+    }
 
-	public Categoria(int id, String descripcion) {
-		super();
-		this.id = id;
-		this.descripcion = descripcion;
-	}
+    public Categoria(int id, String descripcion) {
+        super();
+        this.id = id;
+        this.descripcion = descripcion;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-	public List<Libro> getListaDeLibros() {
-		return listaDeLibros;
-	}
+    public List<Libro> getListaDeLibros() {
+        return listaDeLibros;
+    }
 
-	public void setListaDeLibros(List<Libro> listaDeLibros) {
-		this.listaDeLibros = listaDeLibros;
-	}
+    public void setListaDeLibros(List<Libro> listaDeLibros) {
+        this.listaDeLibros = listaDeLibros;
+    }
 
-	public static List<Categoria> buscarTodos() {
+    public static List<Categoria> buscarTodos() {
 
-		EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
-		EntityManager manager = factoriaSession.createEntityManager();
+        EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
+        EntityManager manager = factoriaSession.createEntityManager();
+        try {
+            TypedQuery<Categoria> consulta = manager.createQuery("Select c from Categoria c", Categoria.class);
+            return consulta.getResultList();
+        } finally {
+            manager.close();
+        }
 
-		List<Categoria> listaDeCategorias = new ArrayList<Categoria>();
-		try {
+    }
 
-			TypedQuery<Categoria> consulta = manager.createQuery("Select c from Categoria c", Categoria.class);
+    public static Categoria buscarPorClave(int id) {
 
-			listaDeCategorias = consulta.getResultList();
-			return listaDeCategorias;
-		} finally {
-			manager.close();
-		}
+        EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
+        EntityManager manager = factoriaSession.createEntityManager();
 
-	}
+        TypedQuery<Categoria> consulta = manager.createQuery("Select c from Categoria c where c.id=?1",
+                Categoria.class);
+        consulta.setParameter(1, id);
+        try {
 
-	public static Categoria buscarPorClave(int id) {
+            return consulta.getSingleResult();
 
-		EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
-		EntityManager manager = factoriaSession.createEntityManager();
+        } finally {
 
-		TypedQuery<Categoria> consulta = manager.createQuery("Select c from Categoria c where c.id=?1",
-				Categoria.class);
+            manager.close();
+        }
 
-		consulta.setParameter(1, id);
-		Categoria categoria = new Categoria();
-
-		try {
-
-			categoria = consulta.getSingleResult();
-
-			return categoria;
-
-		} finally {
-
-			manager.close();
-		}
-
-	}
+    }
 
 }
