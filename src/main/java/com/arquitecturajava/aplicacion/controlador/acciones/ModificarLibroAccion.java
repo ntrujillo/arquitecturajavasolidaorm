@@ -3,7 +3,6 @@ package com.arquitecturajava.aplicacion.controlador.acciones;
 import com.arquitecturajava.aplicacion.bo.Categoria;
 import com.arquitecturajava.aplicacion.bo.Libro;
 import com.arquitecturajava.aplicacion.servicios.ServicioLibros;
-import com.arquitecturajava.aplicacion.servicios.impl.ServicioLibrosImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +17,7 @@ public class ModificarLibroAccion extends Accion {
     public String ejecutar(HttpServletRequest request,
                            HttpServletResponse response) {
 
-        ServicioLibros servicioLibros = new ServicioLibrosImpl();
+        ServicioLibros servicioLibros = (ServicioLibros) getBean("servicioLibros", request);
         String isbn = request.getParameter("isbn");
         String titulo = request.getParameter("titulo");
         String categoria = request.getParameter("categoria");

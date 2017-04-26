@@ -17,12 +17,6 @@ public class ServicioLibrosImpl implements ServicioLibros {
     LibroDao libroDao;
     CategoriaDao categoriaDao;
 
-    public ServicioLibrosImpl() {
-        ClassPathXmlApplicationContext factoria =
-        new ClassPathXmlApplicationContext("contextoAplicacion.xml");
-        this.libroDao= (LibroDao)factoria.getBean("libroDAO");
-        this.categoriaDao=(CategoriaDao)factoria.getBean("categoriaDAO");
-    }
 
     @Override
     public void salvarLibro(Libro l) {
@@ -57,5 +51,13 @@ public class ServicioLibrosImpl implements ServicioLibros {
     @Override
     public List<Libro> buscarLibroPorCategoria(Categoria categoria) {
         return this.libroDao.buscarPorCategoria(categoria);
+    }
+
+    public void setLibroDao(LibroDao libroDao) {
+        this.libroDao = libroDao;
+    }
+
+    public void setCategoriaDao(CategoriaDao categoriaDao) {
+        this.categoriaDao = categoriaDao;
     }
 }

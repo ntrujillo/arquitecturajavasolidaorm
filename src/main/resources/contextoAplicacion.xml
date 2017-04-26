@@ -3,10 +3,32 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 xsi:schemaLocation="http://www.springframework.org/schema/beans 
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-<bean id="libroDAO"
-class="com.arquitecturajava.aplicacion.jpa.LibroDaoImpl">
-</bean>
-<bean id="categoriaDAO"
-class="com.arquitecturajava.aplicacion.jpa.CategoriaDaoImpl">
-</bean>
+
+    <bean id="fuenteDeDatos" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost/arquitecturaJavaORM"/>
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="arquitecturaJava" />
+        <property name="dataSource" ref="fuenteDeDatos" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect" />
+                <property name="showSql" value="true" />
+            </bean>
+        </property>
+    </bean>
+    <bean id="libroDAO" class="com.arquitecturajava.aplicacion.jpa.LibroDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"></property>
+    </bean>
+    <bean id="categoriaDAO" class="com.arquitecturajava.aplicacion.jpa.CategoriaDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"></property>
+    </bean>
+    <bean id="servicioLibros" class="com.arquitecturajava.aplicacion.servicios.impl.ServicioLibrosImpl">
+        <property name="libroDao" ref="libroDAO"></property>
+        <property name="categoriaDao" ref="categoriaDAO"></property>
+    </bean>
 </beans>
