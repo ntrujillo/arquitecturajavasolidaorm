@@ -4,9 +4,8 @@ import com.arquitecturajava.aplicacion.bo.Categoria;
 import com.arquitecturajava.aplicacion.bo.Libro;
 import com.arquitecturajava.aplicacion.dao.CategoriaDao;
 import com.arquitecturajava.aplicacion.dao.LibroDao;
-import com.arquitecturajava.aplicacion.factory.DaoAbstractFactory;
-import com.arquitecturajava.aplicacion.factory.DaoFactory;
 import com.arquitecturajava.aplicacion.servicios.ServicioLibros;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
@@ -19,10 +18,10 @@ public class ServicioLibrosImpl implements ServicioLibros {
     CategoriaDao categoriaDao;
 
     public ServicioLibrosImpl() {
-
-        DaoFactory factory = DaoAbstractFactory.getInstance();
-        this.libroDao = factory.getLibroDao();
-        this.categoriaDao = factory.getCategoriaDao();
+        ClassPathXmlApplicationContext factoria =
+        new ClassPathXmlApplicationContext("contextoAplicacion.xml");
+        this.libroDao= (LibroDao)factoria.getBean("libroDAO");
+        this.categoriaDao=(CategoriaDao)factoria.getBean("categoriaDAO");
     }
 
     @Override
