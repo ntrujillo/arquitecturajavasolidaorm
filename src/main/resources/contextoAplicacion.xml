@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://www.springframework.org/schema/beans 
-http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/osgi
+        http://www.springframework.org/schema/osgi/spring-osgi.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+
+    <tx:annotation-driven />
+    <context:annotation-config />
+    <context:component-scan base-package="com.arquitecturajava.aplicacion.*" />
+    <bean id="transactionManager"
+          class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
     <bean id="fuenteDeDatos" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost/arquitecturaJavaORM"/>
@@ -21,14 +39,5 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
             </bean>
         </property>
     </bean>
-    <bean id="libroDAO" class="com.arquitecturajava.aplicacion.jpa.LibroDaoImpl">
-        <property name="entityManagerFactory" ref="entityManagerFactory"></property>
-    </bean>
-    <bean id="categoriaDAO" class="com.arquitecturajava.aplicacion.jpa.CategoriaDaoImpl">
-        <property name="entityManagerFactory" ref="entityManagerFactory"></property>
-    </bean>
-    <bean id="servicioLibros" class="com.arquitecturajava.aplicacion.servicios.impl.ServicioLibrosImpl">
-        <property name="libroDao" ref="libroDAO"></property>
-        <property name="categoriaDao" ref="categoriaDAO"></property>
-    </bean>
+
 </beans>
